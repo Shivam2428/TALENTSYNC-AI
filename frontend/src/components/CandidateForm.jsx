@@ -1,7 +1,7 @@
 import { useState } from "react";
 import API from "../api/api";
 
-function CandidateForm() {
+const CandidateForm = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -21,12 +21,12 @@ function CandidateForm() {
     e.preventDefault();
 
     try {
-      const candidateData = {
+      const dataToSend = {
         ...formData,
         skills: formData.skills.split(","),
       };
 
-      await API.post("/candidates", candidateData);
+      await API.post("/candidates", dataToSend);
 
       alert("Candidate Added Successfully");
 
@@ -39,7 +39,6 @@ function CandidateForm() {
       });
     } catch (error) {
       console.log(error);
-
       alert("Error adding candidate");
     }
   };
@@ -52,7 +51,7 @@ function CandidateForm() {
         <input
           type="text"
           name="name"
-          placeholder="Enter Name"
+          placeholder="Name"
           value={formData.name}
           onChange={handleChange}
           required
@@ -61,7 +60,7 @@ function CandidateForm() {
         <input
           type="email"
           name="email"
-          placeholder="Enter Email"
+          placeholder="Email"
           value={formData.email}
           onChange={handleChange}
           required
@@ -70,7 +69,7 @@ function CandidateForm() {
         <input
           type="text"
           name="skills"
-          placeholder="Skills (React, Node.js)"
+          placeholder="Skills (comma separated)"
           value={formData.skills}
           onChange={handleChange}
           required
@@ -90,12 +89,13 @@ function CandidateForm() {
           placeholder="Bio"
           value={formData.bio}
           onChange={handleChange}
+          required
         />
 
         <button type="submit">Add Candidate</button>
       </form>
     </div>
   );
-}
+};
 
 export default CandidateForm;
